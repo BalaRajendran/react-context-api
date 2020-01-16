@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Login from "./components/Login";
+import Profile from "./components/Profile";
+import AuthContext from "./auth-context";
+
+class App extends Component {
+  state = {
+    isAuth: false
+  };
+
+  toggleAuth = () => {
+    this.setState(prevState => {
+      return {
+        isAuth: !prevState.isAuth,
+        userName: "Balaji"
+      };
+    });
+  };
+
+  render() {
+    return (
+      <AuthContext.Provider
+        value={{
+          isAuth: this.state.isAuth,
+          userName: this.state.userName,
+          toggleAuth: this.toggleAuth
+        }}
+      >
+        <Login />
+        <Profile />
+      </AuthContext.Provider>
+    );
+  }
 }
 
 export default App;
